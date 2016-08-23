@@ -2,3 +2,12 @@
 --------------
 To start server:
   python manage.py runserver
+
+To migrate the database:
+  python manage.py migrate
+
+Notes
+-------------
+- The index of the page is set as todo/
+- Registration of a user can be found at todo/register
+- Logging in of a user can be found at todo/login

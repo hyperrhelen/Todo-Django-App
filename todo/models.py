@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 # Create your models here.
+# A task references the user.
+# The list of tasks can be accessed by a user by doing: 
+#   request.user.task_set.all()
 class Task(models.Model):
   person = models.ForeignKey(User, on_delete=models.CASCADE)
   task_name = models.CharField(max_length=250)
