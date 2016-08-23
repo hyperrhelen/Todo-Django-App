@@ -13,6 +13,7 @@ urlpatterns = [
   # /todo/login
   url(r'^login/$', views.login_user, name='login'),
 
+  # /todo/logout
   url(r'^logout/$', views.logout_user, name='logout'),
 
   # /todo/task/add

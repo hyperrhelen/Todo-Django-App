@@ -19,9 +19,6 @@ class IndexView(generic.ListView):
   template_name = 'todo/index.html'
   def get_queryset(self):
     return self.request.user.task_set.all()
-    # return Task.objects.get(person__id=self.request.user.id)
-    # return Task.objects.all()
-    # return Task.objects.get(person=self.request.user)
 
 class DetailView(generic.DetailView):
   model = Task
@@ -44,7 +41,6 @@ class TaskUpdate(UpdateView):
 class TaskDelete(DeleteView):
   model = Task
   success_url = reverse_lazy('index')
-  # fields = ['task_name', 'description']
 
 
 class UserFormView(View):
@@ -91,58 +87,3 @@ def login_user(request):
 def logout_user(request):
   logout(request)
   return redirect('register')
-
-
-# class UserFormLogin(View):
-#   form_class = UserForm
-#   template_name = 'todo/login.html'
-
-
-#   def get(self, request):
-#     form = self.form_class(None)
-#     return render(request, self.template_name, {'form': form })
-  
-
-#   def post(self, request):
-#     form = self.form_class(request.POST)
-#     # username = self.form_class(request.POST['username'])
-#     # password = self.form_class(request.POST['password'])
-#     # form = self.form_class(request.POST)
-#     print(form)
-#     if form.is_valid():
-#       print("reachers here")
-#       user = form.save(commit=False)
-#       username = form.cleaned_data['username']
-#       password = form.cleaned_data['password']
-#       user = authenticate(username=username, password=password)
-#       if user is not None:
-#         if user.is_active:
-#           login(request, user)
-#           return redirect('index')
-#     print(":(")
-#     return render(request, self.template_name, {'form':form})
-
-# # Create your views here.
-# def index(request):
-#   all_tasks = Task.objects.all()
-#   # print(all_tasks)
-#   # template = loader.get_template('todo/index.html')
-#   context = {
-#     'all_tasks': all_tasks,
-#   }
-#   # html = '<h1>All tasks</h1>'
-#   # for task in all_tasks:
-#   #   url = '/task/' + str(task.id) + '/'
-#   #   html += "<a href="+url+">"+task.task_name+"</a><br>"
-#   return render(request, 'todo/index.html', context)
-#   # return HttpResponse(template.render(context,request))
-
-# def detail(request, task_id):
-#   task = get_object_or_404(Task, id=task_id)
-#   # try:
-#   #   task = Task.objects.get(id=task_id)
-#   # except Task.DoesNotExist:
-#   #   raise Http404("Task does not exist.")
-#   return render(request, 'todo/detail.html', {'task': task})
-#   # return HttpResponse("<h2>TODO detail page " + str(task_id)+" .</h2>")
-
