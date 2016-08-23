@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 # from django.template import loader
 
 from django.contrib.auth.models import User
@@ -74,27 +74,54 @@ class UserFormView(View):
     return render(request, self.template_name, {'form':form})
 
 
-class UserFormLogin(View):
-  form_class = UserForm
-  template_name = 'todo/login.html'
+def login_user(request):
+  logout(request)
+  username=password=''
+  if request.POST:
+    username=request.POST['username']
+    password=request.POST['password']
 
-  def get(self, request):
-    form = self.form_class(None)
-    return render(request, self.template_name, {'form': form})
+    user = authenticate(username=username, password=password)
+    if user is not None:
+      if user.is_active:
+        login(request, user)
+        return redirect('index')
+  return render(request, 'todo/login.html', {'username': username, 'password': password})
 
-  def post(self, request):
-    form = self.form_class(request.POST)
-    if form.is_valid():
-      user = form.save(commit=False)
-      username = form.cleaned_data['username']
-      password = form.cleaned_data['password']
+def logout_user(request):
+  logout(request)
+  return redirect('register')
 
-      user = authenticate(username=username, password=password)
-      if user is not None:
-        if user.is_active:
-          login(request, user)
-          return rediret('index')
-    return render(request, self.template_name, {'form':form})
+
+# class UserFormLogin(View):
+#   form_class = UserForm
+#   template_name = 'todo/login.html'
+
+
+#   def get(self, request):
+#     form = self.form_class(None)
+#     return render(request, self.template_name, {'form': form })
+  
+
+#   def post(self, request):
+#     form = self.form_class(request.POST)
+#     # username = self.form_class(request.POST['username'])
+#     # password = self.form_class(request.POST['password'])
+#     # form = self.form_class(request.POST)
+#     print(form)
+#     if form.is_valid():
+#       print("reachers here")
+#       user = form.save(commit=False)
+#       username = form.cleaned_data['username']
+#       password = form.cleaned_data['password']
+#       user = authenticate(username=username, password=password)
+#       if user is not None:
+#         if user.is_active:
+#           login(request, user)
+#           return redirect('index')
+#     print(":(")
+#     return render(request, self.template_name, {'form':form})
+
 # # Create your views here.
 # def index(request):
 #   all_tasks = Task.objects.all()

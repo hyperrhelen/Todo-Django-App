@@ -11,7 +11,10 @@ urlpatterns = [
   url(r'^register/$', views.UserFormView.as_view(), name='register'),
 
   # /todo/login
-  url(r'^login/$', views.UserFormLogin.as_view(), name='login'),
+  url(r'^login/$', views.login_user, name='login'),
+
+  url(r'^logout/$', views.logout_user, name='logout'),
+
   # /todo/task/add
   url(r'^task/add/$', views.TaskCreate.as_view(), name='add'),
   # /todo/task/{ID}/
