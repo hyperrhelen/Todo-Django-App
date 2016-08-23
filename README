@@ -6,6 +6,11 @@ To start server:
 To migrate the database:
   python manage.py migrate
 
+REQS
+----
+- Python 3.5x
+- Django version 1.10
+
 Notes
 -------------
 - The index of the page is set as todo/
