@@ -3,9 +3,20 @@ from . import views
 
 urlpatterns = [
   # /todo/
-  url(r'^$', views.index, name='index'),
+  url(r'^$', views.IndexView.as_view(), name='index'),
   # /todo/{ID}
-  url(r'^(?P<task_id>[0-9]+)/$', views.detail, name='detail'),
-  # /todo/{ID}/favorite
-  url(r'^done/$', views.done, name='done'),
+  url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
+  
+  # /todo/register
+  url(r'^register/$', views.UserFormView.as_view(), name='register'),
+
+  # /todo/login
+  url(r'^login/$', views.UserFormLogin.as_view(), name='login'),
+  # /todo/task/add
+  url(r'^task/add/$', views.TaskCreate.as_view(), name='add'),
+  # /todo/task/{ID}/
+  url(r'^task/(?P<pk>[0-9]+)/$', views.TaskUpdate.as_view(), name='update'),
+  # /todo/task/{ID}/delete
+  url(r'^task/(?P<pk>[0-9]+)/delete/$', views.TaskDelete.as_view(), name='delete'),
+
 ]

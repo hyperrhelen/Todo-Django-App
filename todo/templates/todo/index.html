@@ -1,22 +1,44 @@
+{% extends 'todo/base.html'%}
+
+{% block body %}
+<a href="{% url 'add' %}">(+)Add task</a>
+
 <h1>Tasks</h1>
 {% if error_message %} 
   <p>{{error_message}}</p>
 {% endif %}
 
-{% if all_tasks %}
+{% if object_list %}
   <form action="{% url 'done' %}" method="post">
     {% csrf_token %}
-    {% for task in all_tasks %}
+    {% for task in object_list %}
+      <div class="row">
       <input type="radio" id="task{{forloop.counter}}" name="task" value="{{task.id}}"/>
       <label for="task{{forloop.counter}}">
         
-        {% if task.is_done == False %}
-          {{task.task_name}}
-        {% else %}
-          <strong>{{task.task_name}}</strong>
+
+        {% if task.is_done == True %}
+        <strike>
         {% endif %}
+
+
+        <a href="{% url 'detail' task.id %}">{{task.task_name}}</a>
+
+        {% if task.is_done == True %}
+        </strike>
+        {% endif %}
+
         <br>
+        <a href="{% url 'update' task.id %}">Edit</a>
+        <br>
+        <a href="{% url 'delete' task.id %}">Delete</a>
+<!--         <form method="POST" action="{% url 'delete' task.id %}">
+           {% csrf_token %}
+           <input type="submit" value="DELETE"/>
+        </form>﻿ -->
+
       </label>
+      </div>
     {% endfor %}
     <input type="submit" value="Mark Done">
   </form>
@@ -33,3 +55,4 @@
   <p>There are no tasks.</p>
 {% endif %}
 
+{% endblock %}
