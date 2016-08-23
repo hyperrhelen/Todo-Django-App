@@ -19,5 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     # Table of contents for website.
     url(r'^admin/', admin.site.urls),
-    url(r'^task/', include('todo.urls')),
+    url(r'^todo/', include('todo.urls')),
 ]

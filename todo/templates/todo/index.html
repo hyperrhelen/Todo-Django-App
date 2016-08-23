@@ -1,0 +1,35 @@
+<h1>Tasks</h1>
+{% if error_message %} 
+  <p>{{error_message}}</p>
+{% endif %}
+
+{% if all_tasks %}
+  <form action="{% url 'done' %}" method="post">
+    {% csrf_token %}
+    {% for task in all_tasks %}
+      <input type="radio" id="task{{forloop.counter}}" name="task" value="{{task.id}}"/>
+      <label for="task{{forloop.counter}}">
+        
+        {% if task.is_done == False %}
+          {{task.task_name}}
+        {% else %}
+          <strong>{{task.task_name}}</strong>
+        {% endif %}
+        <br>
+      </label>
+    {% endfor %}
+    <input type="submit" value="Mark Done">
+  </form>
+
+  
+
+  <!-- <ul> -->
+    <!-- {% for task in all_tasks %} -->
+      <!-- <li><a href="{% url 'detail' task.id %}">{{task.task_name}}</a></li> -->
+      <!-- <li><a href="/todo/{{task.id}}/">{{task.task_name}}</a></li> -->
+    <!-- {% endfor %} -->
+  <!-- </ul> -->
+{% else %}
+  <p>There are no tasks.</p>
+{% endif %}
+
